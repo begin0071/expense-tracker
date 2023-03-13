@@ -3,10 +3,7 @@ import RecentTransactions from "../components/TransactionsPage/RecentTransaction
 import NewTransaction from "../components/TransactionsPage/NewTransaction";
 import { Wrapper } from "../components";
 
-
-
 const Transactions = (props) => {
-
   return (
     <Wrapper>
       <h1>Transactions</h1>
@@ -16,11 +13,7 @@ const Transactions = (props) => {
         <NewTransaction />
       </div>
     </Wrapper>
-  )
-}
-
-
-
-
+  );
+};
 
 export default Transactions;

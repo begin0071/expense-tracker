@@ -1,7 +1,4 @@
 // Create transaction controller
-// Create a new file in the controllers folder called transaction-controller.js
-
-const { Schema } = require("mongoose");
 const { Transaction } = require("../models");
 const { User } = require("../models");
 
@@ -79,9 +76,44 @@ const getTransactionById = async (req, res) => {
 // Update a transaction
 const updateTransaction = async (req, res) => {
   try {
-    const transaction = await Transaction.findOneAndUpdate(
+    const { amount, description, type, date, user } = req.body;
+    const existingUser = await User.findById(user);
+
+    if (!existingUser) {
+      res.status(500).json({ message: "No user found with this id!" });
+      return;
+    }
+
+    const oldTransaction = await Transaction.findById(req.params.id);
+
+    // Calculate the difference between the old and new amount
+    const difference = oldTransaction.amount - amount;
+
+    // check if user has enough balance
+    if (type === "Expense" && existingUser.balance < difference) {
+      res.status(500).json({ message: "Not enough balance!" });
+      return;
+    }
+
+    const transaction = await Transaction.updateOne(
       { _id: req.params.id },
-      req.body,
+      {
+        amount,
+        description,
+        type,
+        date,
+        user,
+      },
+      { new: true }
+    );
+
+    const updateUser = await User.updateOne(
+      { _id: user },
+      {
+        $inc: {
+          balance: difference,
+        },
+      },
       { new: true }
     );
 
@@ -97,6 +129,19 @@ const deleteTransaction = async (req, res) => {
     const transaction = await Transaction.findOneAndDelete({
       _id: req.params.id,
     });
+
+    const updateUser = await User.updateOne(
+      { _id: transaction.user },
+      {
+        $inc: {
+          balance:
+            transaction.type === "Expense"
+              ? transaction.amount
+              : -transaction.amount,
+        },
+      },
+      { new: true }
+    );
 
     res.status(200).json(transaction);
   } catch (err) {

@@ -16,15 +16,6 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(routes);
 
-// Import routes
-const analyticsRoutes = require('./routes/analytics');
-const accountRoutes = require('./routes/account');
-const transactionsRoutes = require('./routes/transactions');
-
-app.use('/api', analyticsRoutes);
-app.use('/api', accountRoutes);
-app.use('/api', transactionsRoutes);
-
 db.once('open', () => {
   app.listen(PORT, () => console.log(`Now listening on localhost: ${PORT}`));
 });

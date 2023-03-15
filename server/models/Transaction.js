@@ -32,6 +32,10 @@ const transactionSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  wallet: {
+    type: Schema.Types.ObjectId,
+    ref: "Wallet",
+  },
 });
 
 const Transaction = model("Transaction", transactionSchema);

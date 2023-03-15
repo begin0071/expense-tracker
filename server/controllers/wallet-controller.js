@@ -21,9 +21,11 @@ const createWallet = async (req, res) => {
 };
 
 // Get all wallets
-const getAllWallets = async (req, res) => {
+const getAllWalletsByUserId = async (req, res) => {
   try {
-    const allWallets = await Wallet.find({}).populate("user");
+    const allWallets = await Wallet.find({
+      user: req.params.user_id,
+    }).populate("user");
 
     res.status(200).json(allWallets);
   } catch (err) {
@@ -77,4 +79,12 @@ const deleteWallet = async (req, res) => {
     console.log(err);
     res.status(500).json(err);
   }
+};
+
+module.exports = {
+  createWallet,
+  getAllWalletsByUserId,
+  getSingleWallet,
+  updateWallet,
+  deleteWallet,
 };

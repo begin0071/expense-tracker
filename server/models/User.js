@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const dayjs = require("dayjs");
 
 const userSchema = new Schema({
   email: {
@@ -18,6 +19,16 @@ const userSchema = new Schema({
   },
   location: {
     type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    get: (value) => dayjs(value).format("MMM DD, YYYY [at] hh:mm a"),
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+    get: (value) => dayjs(value).format("MMM DD, YYYY [at] hh:mm a"),
   },
 });
 

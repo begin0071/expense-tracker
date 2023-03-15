@@ -1,44 +1,32 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const monthlySchema = new Schema({
   id: {
-    type: DataTypes.INTEGER,
+    type: Number,
     required: true,
   },
   expense: {
-    type: DataTypes.DECIMAL,
+    type: Number,
     required: true,
   },
   income: {
-    type: DataTypes.DECIMAL,
+    type: Number,
     required: true,
   },
-
-
+  transaction_id: { type: Number, required: true },
   Monthly_Savings: {
-    type: DataTypes.DECIMAL,
+    type: Number,
     required: true,
   },
-  Monthly_Balance: { 
-    type: DataTypes.DECIMAL,
+  Monthly_Balance: {
+    type: Number,
     required: true,
   },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-
 });
 
-
-
-
-
-  transaction_id: { type: DataTypes.INTEGER, required: true },
-
-});
-
-
-
-const Monthly = model('Monthly', monthlySchema);
+const Monthly = model("Monthly", monthlySchema);
 module.exports = Monthly;

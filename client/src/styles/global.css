@@ -1,22 +1,48 @@
 :root {
   --Sunset: #ed6a5a;
-  --Dark: #202020; 
-  
+  --Dark: #202020;
 }
 
 * {
   background-color: rgb(17, 17, 17);
 }
 
-h1, h2, h3, h4, h5, h6, p, li, td, th, blockquote, label, input, textarea, select {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+td,
+th,
+blockquote,
+label,
+input,
+textarea,
+select {
   color: white;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: bold;
 }
 
-p, li, td, th, blockquote, label, input, textarea, select {
+p,
+li,
+td,
+th,
+blockquote,
+label,
+input,
+textarea,
+select {
   font-size: 1.2rem;
   line-height: 165%;
 }
@@ -41,72 +67,60 @@ header {
 
 .page-name:hover {
   background-color: none;
-  color:#ed6a5a;
+  color: #ed6a5a;
   font-weight: bold;
 }
-
-
 
 .page-name {
   position: relative;
 }
 
 .page-name::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 4px;
-    border-radius: 4px;
-    background-color: #ed6a5a;
-    bottom: 0;
-    left: 0;
-    transform-origin: right;
-    transform: scaleX(0);
-    transition: transform .3s ease-in-out;
-  }
-
-  .page-name:hover::before {
-  transform-origin: left;
-  transform: scaleX(1);
-  
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background-color: #ed6a5a;
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
 }
 
-
+.page-name:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
 
 .moneybag {
   padding-top: 10px;
 }
 
-
-
-
 /* NAVIGATION */
-
-
-
 
 .nav {
   border: 5px solid rgba(128, 128, 128, 0);
   height: 750px;
   background-image: url("../components/images/gray-background.jpeg");
-  height: 100%;  
-  width: 15%;  
-  position: fixed; 
-  z-index: 1; 
-  top: 10%; 
-  left: 0; 
-  transition: .5s ease; 
-  overflow-x: hidden; 
-  padding-top: 20px; 
-  display: flex; 
-  flex-direction: column; 
+  height: 100%;
+  width: 15%;
+  position: fixed;
+  z-index: 1;
+  top: 10%;
+  left: 0;
+  transition: 0.5s ease;
+  overflow-x: hidden;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-around;
   padding-bottom: 200px;
   border: solid;
 }
-
 
 .nav-item .nav-link {
   background-color: rgba(255, 255, 255, 0.1);
@@ -116,37 +130,32 @@ header {
 
 .nav-item .nav-link:hover {
   background-color: none;
-  color:#ed6a5a;
+  color: #ed6a5a;
   font-weight: bold;
 }
-
 
 .nav-link {
   position: relative;
 }
 
 .nav-link::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 4px;
-    border-radius: 4px;
-    background-color: #ed6a5a;
-    bottom: 0;
-    left: 0;
-    transform-origin: right;
-    transform: scaleX(0);
-    transition: transform .3s ease-in-out;
-  }
-
-  .nav-link:hover::before {
-  transform-origin: left;
-  transform: scaleX(1);
-  
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background-color: #ed6a5a;
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
 }
 
-
-
+.nav-link:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
 
 /* TRANSACTIONS PAGE */
 
@@ -161,9 +170,8 @@ header {
   flex-wrap: wrap;
 }
 
-
 .net-worth {
-  width: 20%;
+  /* width: 20%; */
   align-items: flex-start;
 }
 
@@ -175,7 +183,7 @@ header {
 }
 
 .recent-transactions {
-  width: 20%;
+  /* width: 20%; */
   align-items: flex-start;
 }
 
@@ -190,69 +198,70 @@ h1 {
   align-items: center;
   list-style-type: none;
   text-align: center;
-  background-color:#202020;
+  background-color: #202020;
   flex-wrap: wrap;
-  
 }
 
 .transaction-nav-item {
-  background-color:#202020;
+  background-color: #202020;
   display: flex;
   align-self: center;
   align-items: flex-start;
-  padding-right:30px;
+  padding-right: 30px;
   padding-bottom: 1px;
   padding-top: 12px;
-  justify-content:center;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
-
-.net-worth .card-header, .recent-transactions .card-header, .new-transaction .card-header {
+.net-worth .card-header,
+.recent-transactions .card-header,
+.new-transaction .card-header {
   background-color: var(--Dark);
   color: white;
   border: 3px solid gray;
-
 }
 
-.net-worth .list-group-item, .recent-transactions .list-group-item, .new-transaction .card-body {
+.net-worth .list-group-item,
+.recent-transactions .list-group-item,
+.new-transaction .card-body {
   background-color: var(--Dark);
   color: white;
 }
 
-.net-worth .btn, .recent-transactions .btn, .new-transaction .btn {
+.net-worth .btn,
+.recent-transactions .btn,
+.new-transaction .btn {
   background-color: #ed6a5a;
   padding: 5px;
 }
 
-.net-worth .btn:hover, .recent-transactions .btn:hover{
+.net-worth .btn:hover,
+.recent-transactions .btn:hover {
   background-color: var(--Dark);
   color: #ed6a5a;
 }
 
-
-
-
-
 /* ANALYTICS PAGE */
-
 
 .flexbox-container {
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
   flex-wrap: wrap;
-
 }
 
-.yearly .card-header, .monthly .card-header, .monthly-expenses .card-header {
+.yearly .card-header,
+.monthly .card-header,
+.monthly-expenses .card-header {
   background-color: var(--Dark);
   color: white;
   border: 3px solid gray;
-
 }
 
-.yearly .list-group-item, .monthly .list-group-item, .monthly-expenses .list-group-item {
+.yearly .list-group-item,
+.monthly .list-group-item,
+.monthly-expenses .list-group-item {
   background-color: var(--Dark);
   color: white;
 }
@@ -261,21 +270,21 @@ h1 {
   display: flex;
 }
 
-
-.yearly .btn, .monthly .btn, .monthly-expenses .btn {
+.yearly .btn,
+.monthly .btn,
+.monthly-expenses .btn {
   background-color: #ed6a5a;
   padding: 5px;
-  
-  
 }
 
-.yearly .btn:hover, .monthly .btn:hover, .monthly-expenses .btn:hover{
+.yearly .btn:hover,
+.monthly .btn:hover,
+.monthly-expenses .btn:hover {
   background-color: var(--Dark);
   color: #ed6a5a;
 }
 
 /* ACCOUNT PAGE */
-
 
 /* .sign-in {
   display: flex;

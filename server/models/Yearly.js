@@ -1,38 +1,32 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const yearlySchema = new Schema({
   id: {
-    type: DataTypes.INTEGER,
+    type: Number,
     required: true,
   },
   expense: {
-    type: DataTypes.DECIMAL,
+    type: Number,
     required: true,
   },
   income: {
-    type: DataTypes.DECIMAL,
+    type: Number,
     required: true,
   },
 
   yearly_Savings: {
-    type: DataTypes.DECIMAL,
+    type: Number,
     required: true,
   },
-  yearly_Balance: { 
-    type: DataTypes.DECIMAL,
+  yearly_Balance: {
+    type: Number,
     required: true,
   },
-   user: {
+  user: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-
-
 });
 
-
-
-
-
-const Yearly = model('Yearly', yearlySchema);
+const Yearly = model("Yearly", yearlySchema);
 module.exports = Yearly;

@@ -6,7 +6,17 @@ import decode from "jwt-decode";
 class AuthService {
   // get user data
   getProfile() {
-    return decode(this.getToken());
+    const token = this.getToken();
+
+    if (!token) {
+      return null;
+    }
+
+    const isExpire = this.isTokenExpired(token);
+    if (!isExpire) {
+      return decode(this.getToken());
+    }
+    return null;
   }
 
   // check if user's logged in
@@ -21,6 +31,7 @@ class AuthService {
     try {
       const decoded = decode(token);
       if (decoded.exp < Date.now() / 1000) {
+        localStorage.removeItem("id_token");
         return true;
       } else return false;
     } catch (err) {

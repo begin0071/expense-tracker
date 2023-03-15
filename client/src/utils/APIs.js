@@ -28,3 +28,36 @@ export const loginUser = (userData) => {
     body: JSON.stringify(userData),
   });
 };
+
+// get all wallets by user id
+export const getWalletsApi = (user_id) => {
+  return fetch(`/api/wallets/${user_id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      // authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+// Create a new wallet
+export const createWallet = (walletData) => {
+  return fetch("/api/wallets", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      // authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(walletData),
+  });
+};
+
+export const createTransaction = (transactionData) => {
+  return fetch("/api/transactions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      // authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(transactionData),
+  });
+};

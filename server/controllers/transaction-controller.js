@@ -1,25 +1,33 @@
 // Create transaction controller
 const { Transaction } = require("../models");
 const { User } = require("../models");
+const { Wallet } = require("../models");
 
 // Create a new transaction
 const createTransaction = async (req, res) => {
   try {
-    const { amount, description, type, date, user } = req.body;
+    const { amount, description, type, date, user, wallet } = req.body;
 
-    // find existing user
     const existingUser = await User.findById(user);
-
-    console.log("existingUser", existingUser);
-
     if (!existingUser) {
       res.status(500).json({ message: "No user found with this id!" });
       return;
     }
 
+    // get wallet balance
+    const existingWallet = await Wallet.findById(wallet);
+
     // check if user has enough balance
-    if (type === "Expense" && existingUser.balance < amount) {
+    if (type === "expense" && existingWallet.balance < amount) {
       res.status(500).json({ message: "Not enough balance!" });
+      return;
+    }
+
+    if (
+      (type === "income" && amount < 0) ||
+      (type === "expense" && amount < 0)
+    ) {
+      res.status(500).json({ message: "Amount must be positive!" });
       return;
     }
 
@@ -31,20 +39,35 @@ const createTransaction = async (req, res) => {
       user,
     });
 
-    const updateUser = await User.updateOne(
-      { _id: user },
-      {
-        $inc: {
-          balance:
-            req.body.type === "Expense" ? -req.body.amount : req.body.amount,
-        },
-      },
-      { new: true }
+    await Wallet.updateOne(
+      { _id: wallet },
+      { $inc: { balance: type === "income" ? amount : -amount } },
+      { runValidators: true, new: true }
     );
 
     res.status(200).json(newTransaction);
   } catch (err) {
     console.log(err);
+    res.status(400).json(err);
+  }
+};
+
+// get all transactions by user id and type then sum the amount and return the object with the total
+const getTransactionsByUserId = async (req, res) => {
+  try {
+    const { userId, type } = req.params;
+
+    const transactions = await Transaction.find({
+      user: userId,
+      type: type,
+    }).populate("user");
+
+    const total = transactions.reduce((acc, transaction) => {
+      return acc + transaction.amount;
+    }, 0);
+
+    res.status(200).json({ transactions, total });
+  } catch (err) {
     res.status(400).json(err);
   }
 };
@@ -76,9 +99,9 @@ const getTransactionById = async (req, res) => {
 // Update a transaction
 const updateTransaction = async (req, res) => {
   try {
-    const { amount, description, type, date, user } = req.body;
-    const existingUser = await User.findById(user);
+    const { amount, description, type, date, user, wallet } = req.body;
 
+    const existingUser = await User.findById(user);
     if (!existingUser) {
       res.status(500).json({ message: "No user found with this id!" });
       return;
@@ -89,8 +112,11 @@ const updateTransaction = async (req, res) => {
     // Calculate the difference between the old and new amount
     const difference = oldTransaction.amount - amount;
 
+    // get wallet balance
+    const existingWallet = await Wallet.findById(wallet);
+
     // check if user has enough balance
-    if (type === "Expense" && existingUser.balance < difference) {
+    if (type === "expense" && existingWallet.balance < difference) {
       res.status(500).json({ message: "Not enough balance!" });
       return;
     }
@@ -107,14 +133,10 @@ const updateTransaction = async (req, res) => {
       { new: true }
     );
 
-    const updateUser = await User.updateOne(
-      { _id: user },
-      {
-        $inc: {
-          balance: difference,
-        },
-      },
-      { new: true }
+    await Wallet.updateOne(
+      { _id: wallet },
+      { $inc: { balance: difference } },
+      { runValidators: true, new: true }
     );
 
     res.status(200).json(transaction);
@@ -130,17 +152,11 @@ const deleteTransaction = async (req, res) => {
       _id: req.params.id,
     });
 
-    const updateUser = await User.updateOne(
-      { _id: transaction.user },
-      {
-        $inc: {
-          balance:
-            transaction.type === "Expense"
-              ? transaction.amount
-              : -transaction.amount,
-        },
-      },
-      { new: true }
+    // update wallet balance after deleting transaction
+    await Wallet.updateOne(
+      { _id: transaction.wallet },
+      { $inc: { balance: transaction.amount } },
+      { runValidators: true, new: true }
     );
 
     res.status(200).json(transaction);

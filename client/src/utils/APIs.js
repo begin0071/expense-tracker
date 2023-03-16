@@ -62,6 +62,15 @@ export const createTransaction = (transactionData) => {
   });
 };
 
+export const getTransactionsByUserIdApi = (user_id) => {
+  return fetch(`/api/transactions/${user_id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      // authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const getMonthlyAnalyticsApi = (userId) => {
   return fetch(`/api/monthly-transactions/${userId}`, {
     headers: {

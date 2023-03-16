@@ -104,6 +104,8 @@ const NewTransaction = ({ userId }) => {
           text: "Transaction created!",
           icon: "success",
           confirmButtonText: "OK",
+        }).then(() => {
+          window.location.reload();
         });
       }
     },
@@ -146,6 +148,8 @@ const NewTransaction = ({ userId }) => {
           text: "Transaction created!",
           icon: "success",
           confirmButtonText: "OK",
+        }).then(() => {
+          window.location.reload();
         });
       }
     },
@@ -162,7 +166,7 @@ const NewTransaction = ({ userId }) => {
   }, [userId]);
 
   return (
-    <div class="new-transaction">
+    <div className="new-transaction">
       <Card>
         <Card.Header>New Transaction</Card.Header>
         <Card.Body>

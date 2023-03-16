@@ -55,18 +55,35 @@ const createTransaction = async (req, res) => {
 // get all transactions by user id and type then sum the amount and return the object with the total
 const getTransactionsByUserId = async (req, res) => {
   try {
-    const { userId, type } = req.params;
+    const { user_id } = req.params;
 
     const transactions = await Transaction.find({
-      user: userId,
-      type: type,
-    }).populate("user");
+      user: user_id,
+    })
+      .populate("user")
+      .sort({ date: -1 });
 
-    const total = transactions.reduce((acc, transaction) => {
-      return acc + transaction.amount;
+    // get total amount by type expense
+    const totalExpense = transactions.reduce((acc, curr) => {
+      if (curr.type === "expense") {
+        return acc + curr.amount;
+      }
+      return acc;
     }, 0);
 
-    res.status(200).json({ transactions, total });
+    // get total amount by type income
+    const totalIncome = transactions.reduce((acc, curr) => {
+      if (curr.type === "income") {
+        return acc + curr.amount;
+      }
+      return acc;
+    }, 0);
+
+    res.status(200).json({
+      data: transactions,
+      total_expense: totalExpense,
+      total_income: totalIncome,
+    });
   } catch (err) {
     res.status(400).json(err);
   }
@@ -168,6 +185,7 @@ const deleteTransaction = async (req, res) => {
 module.exports = {
   createTransaction,
   getAllTransactions,
+  getTransactionsByUserId,
   getTransactionById,
   updateTransaction,
   deleteTransaction,

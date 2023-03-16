@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Form, Button, Alert, Tabs, Tab } from "react-bootstrap";
 
 import "../../styles/global.css";
@@ -6,6 +6,7 @@ import { Wrapper } from "../../components";
 
 import { createUser, loginUser } from "../../utils/APIs";
 import Auth from "../../utils/auth";
+import Swal from "sweetalert2";
 
 const SignIn = () => {
   const [tab, setTab] = useState("login");
@@ -22,6 +23,44 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+
+  const validateFormData = useCallback((formData) => {
+    if (formData.email === "" || formData.password === "") {
+      Swal.fire({
+        title: "Warning",
+        text: "Please fill all the fields!",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return false;
+    }
+
+    if (formData.amount <= 0) {
+      Swal.fire({
+        title: "Warning",
+        text: "Amount must be greater than 0!",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return false;
+    }
+
+    // check the email format with regex
+    const emailRegex = new RegExp(
+      "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"
+    );
+    if (!emailRegex.test(formData.email)) {
+      Swal.fire({
+        title: "Warning",
+        text: "Please enter a valid email address!",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return false;
+    }
+
+    return true;
+  }, []);
 
   const handleLoginInputChange = (event) => {
     const { name, value } = event.target;
@@ -40,11 +79,14 @@ const SignIn = () => {
 
     try {
       const response = await loginUser(userLoginFormData);
-
-      console.log(response);
-
       if (!response.ok) {
-        throw new Error("something went wrong!");
+        Swal.fire({
+          title: "Error",
+          text: "Something went wrong!",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+        return;
       }
 
       const { token, user } = await response.json();
@@ -68,6 +110,10 @@ const SignIn = () => {
 
   const handleSignUpFormSubmit = async (event) => {
     event.preventDefault();
+
+    if (!validateFormData(userSignUpFormData)) {
+      return;
+    }
 
     // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
@@ -124,6 +170,7 @@ const SignIn = () => {
             <Form.Group className="mb-3">
               <Form.Label htmlFor="email">Email</Form.Label>
               <Form.Control
+                className="bg-light"
                 type="text"
                 placeholder="Your email"
                 name="email"
@@ -139,6 +186,7 @@ const SignIn = () => {
             <Form.Group className="mb-3">
               <Form.Label htmlFor="password">Password</Form.Label>
               <Form.Control
+                className="bg-light"
                 type="password"
                 placeholder="Your password"
                 name="password"
@@ -182,6 +230,7 @@ const SignIn = () => {
             <Form.Group className="mb-3">
               <Form.Label htmlFor="name">Name</Form.Label>
               <Form.Control
+                className="bg-light"
                 type="text"
                 placeholder="Your name"
                 name="name"
@@ -197,6 +246,7 @@ const SignIn = () => {
             <Form.Group className="mb-3">
               <Form.Label htmlFor="email">Email</Form.Label>
               <Form.Control
+                className="bg-light"
                 type="email"
                 placeholder="Your email address"
                 name="email"
@@ -212,6 +262,7 @@ const SignIn = () => {
             <Form.Group className="mb-3">
               <Form.Label htmlFor="password">Password</Form.Label>
               <Form.Control
+                className="bg-light"
                 type="password"
                 placeholder="Your password"
                 name="password"

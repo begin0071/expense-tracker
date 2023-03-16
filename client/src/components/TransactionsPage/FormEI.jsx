@@ -28,6 +28,7 @@ const FormEI = ({ id, optionData, handleSubmit, handleInput }) => {
   const selectOption = useMemo(
     () => (
       <Form.Select
+        className="bg-light"
         aria-label="Default select example"
         name="wallet"
         onChange={handleOnChangeOption}
@@ -56,6 +57,7 @@ const FormEI = ({ id, optionData, handleSubmit, handleInput }) => {
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Amount</Form.Label>
             <Form.Control
+              className="bg-light"
               type="text"
               placeholder="Amount"
               name="amount"
@@ -69,6 +71,7 @@ const FormEI = ({ id, optionData, handleSubmit, handleInput }) => {
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Description</Form.Label>
             <Form.Control
+              className="bg-light"
               type="text"
               placeholder="Description"
               name="description"
@@ -81,6 +84,7 @@ const FormEI = ({ id, optionData, handleSubmit, handleInput }) => {
             <Form.Label>Date</Form.Label>
             <div className="">
               <DateTimePicker
+                className="bg-light"
                 name="date"
                 onChange={onChangeDateTime}
                 value={dateTime}

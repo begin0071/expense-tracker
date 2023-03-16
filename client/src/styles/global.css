@@ -20,6 +20,10 @@
   color: black;
 }
 
+input {
+  background-color: white;
+}
+
 h1,
 h2,
 h3,

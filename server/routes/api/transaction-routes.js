@@ -4,6 +4,7 @@ const transactionControllers = require("../../controllers/transaction-controller
 // Import any controllers needed here
 const {
   getAllTransactions,
+  getTransactionsByUserId,
   getTransactionById,
   createTransaction,
   updateTransaction,
@@ -14,6 +15,7 @@ const {
 router.route("/").get(getAllTransactions);
 router.route("/").post(createTransaction);
 
+router.route("/:user_id").get(getTransactionsByUserId);
 router.route("/:id").get(getTransactionById);
 router.route("/:id").put(updateTransaction);
 router.route("/:id").delete(deleteTransaction);

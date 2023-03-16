@@ -125,8 +125,6 @@ const getMonthlyDataById = async (req, res) => {
       };
     });
 
-    console.log("monthlyData", monthlyData);
-
     res.status(200).json({ data: monthlyData });
   } catch (err) {
     res.status(400).json(err);

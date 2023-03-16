@@ -13,8 +13,6 @@ const Account = (props) => {
       try {
         const token = auth.loggedIn() ? auth.getToken() : null;
 
-        console.log("token: ", token);
-
         if (!token) {
           return false;
         }
@@ -34,9 +32,6 @@ const Account = (props) => {
 
     getUserData();
   }, []);
-
-  console.log("aaa", userData);
-  console.log(auth.loggedIn());
 
   return (
     <>

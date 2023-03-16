@@ -19,7 +19,7 @@ const Transactions = () => {
   return (
     <Wrapper>
       <h1>Transactions</h1>
-      <div class="flexbox-container"></div>
+      <div className="flexbox-container"></div>
 
       <Container>
         <Row>
@@ -33,7 +33,7 @@ const Transactions = () => {
               <NewTransaction userId={userId} />
             </div>
             <div className="py-3">
-              <RecentTransactions userId={userId} />
+              <RecentTransactions />
             </div>
           </Col>
         </Row>

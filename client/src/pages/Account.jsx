@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Wrapper } from "../components";
+import Profile from "../components/AccountPage/Profile";
 import SignIn from "../components/AccountPage/SignIn";
 import { getMe } from "../utils/APIs";
-import Auth from "../utils/auth";
+import auth from "../utils/auth";
 
 const Account = (props) => {
   const [userData, setUserData] = useState({});
-  const userDataLength = Object.keys(userData).length;
 
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
+        const token = auth.loggedIn() ? auth.getToken() : null;
 
         console.log("token: ", token);
 
@@ -33,21 +33,16 @@ const Account = (props) => {
     };
 
     getUserData();
-  }, [userDataLength]);
+  }, []);
 
-  console.log(userData);
-  console.log(Auth.loggedIn());
+  console.log("aaa", userData);
+  console.log(auth.loggedIn());
 
   return (
-    
     <>
       <h1>Account</h1>
       {/* <SignIn /> */}
-      {Auth.loggedIn() ? (
-        <button onClick={Auth.logout}>Logout</button>
-      ) : (
-        <SignIn />
-      )}
+      {auth.loggedIn() ? <Profile user={userData} /> : <SignIn />}
     </>
   );
 };

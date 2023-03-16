@@ -1,0 +1,19 @@
+.custom-modal {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.custom-modal .modal-dialog,
+.custom-modal .modal-dialog .modal-content {
+  background-color: rgb(127, 127, 127);
+}
+
+.custom-modal .modal-dialog .modal-content .modal-header,
+.custom-modal .modal-dialog .modal-content .modal-title,
+.custom-modal .modal-dialog .modal-content .modal-body {
+  background-color: rgb(127, 127, 127);
+}
+
+.custom-modal-form div,
+.custom-modal-form div label {
+  background-color: rgb(127, 127, 127);
+}

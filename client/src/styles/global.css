@@ -4,7 +4,7 @@
   --Cerulean: rgb(51, 124, 160);
 }
 
-* {
+*:not([class^="swal2"]) {
   background-color: rgb(17, 17, 17);
 }
 
@@ -101,8 +101,6 @@ header {
 
 /* NAVIGATION */
 
-
-
 /* .navigation {
   border: 5px solid rgba(128, 128, 128, 0);
   height: 750px;
@@ -126,15 +124,11 @@ header {
 } */
 
 .navigation {
-  
   padding-top: 21px;
   align-items: center;
+}
 
-  
-} 
-
- .nav-item .nav-link {
-  
+.nav-item .nav-link {
   color: white;
   font-size: 30px;
 }
@@ -166,7 +160,7 @@ header {
 .nav-link:hover::before {
   transform-origin: left;
   transform: scaleX(1);
-} 
+}
 
 /* TRANSACTIONS PAGE */
 
@@ -242,7 +236,8 @@ h1 {
 
 .net-worth .btn,
 .recent-transactions .btn,
-.new-transaction .btn, button {
+.new-transaction .btn,
+button {
   background-color: #ed6a5a;
   padding: 5px;
 }
@@ -275,8 +270,6 @@ h1 {
   margin: 20px;
   padding: 5px;
 }
-
-
 
 /* ACCOUNT PAGE */
 

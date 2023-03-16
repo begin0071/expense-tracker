@@ -10,7 +10,7 @@ module.exports = {
     res.status(200).json(users);
   },
 
-  async getUserById({ params }, res) {
+  async getUser({ params }, res) {
     const user = await User.findOne({ _id: params.id });
     if (!user) return res.status(400).json({ message: "Unable to find user" });
     res.status(200).json(user);
@@ -20,7 +20,11 @@ module.exports = {
     const salt = await bcrypt.genSalt(10);
     const password = await bcrypt.hash(body.password, salt);
 
-    const userToInsert = { email: body.email, password: password };
+    const userToInsert = {
+      name: body?.name,
+      email: body.email,
+      password: password,
+    };
 
     const user = await User.create(userToInsert);
 

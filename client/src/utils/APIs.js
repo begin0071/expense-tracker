@@ -40,7 +40,7 @@ export const getWalletsApi = (user_id) => {
 };
 
 // Create a new wallet
-export const createWallet = (walletData) => {
+export const createWalletApi = (walletData) => {
   return fetch("/api/wallets", {
     method: "POST",
     headers: {

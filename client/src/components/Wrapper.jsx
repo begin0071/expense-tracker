@@ -1,14 +1,5 @@
+const Wrapper = ({ children }) => {
+  return <div>{children}</div>;
+};
 
-
-
-
-const Wrapper = ({children}) => {
-
-  return (
-    <div style={{  backgroundColor: "#111"}}>
-      { children }
-    </div>
-  )
-}
-
-export default Wrapper
+export default Wrapper;

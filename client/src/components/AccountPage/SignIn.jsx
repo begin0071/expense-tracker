@@ -18,7 +18,7 @@ const SignIn = () => {
   });
 
   const [userSignUpFormData, setUserSignUpFormData] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -93,7 +93,7 @@ const SignIn = () => {
     }
 
     setUserSignUpFormData({
-      username: "",
+      name: "",
       email: "",
       password: "",
     });
@@ -180,17 +180,17 @@ const SignIn = () => {
             </Alert>
 
             <Form.Group className="mb-3">
-              <Form.Label htmlFor="username">Username</Form.Label>
+              <Form.Label htmlFor="name">Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Your username"
-                name="username"
+                placeholder="Your name"
+                name="name"
                 onChange={handleSignUpInputChange}
-                value={userSignUpFormData.username}
+                value={userSignUpFormData.name}
                 required
               />
               <Form.Control.Feedback type="invalid">
-                Username is required!
+                Name is required!
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -228,7 +228,7 @@ const SignIn = () => {
               className="btn btn-danger d-block w-100"
               disabled={
                 !(
-                  userSignUpFormData.username &&
+                  userSignUpFormData.name &&
                   userSignUpFormData.email &&
                   userSignUpFormData.password
                 )

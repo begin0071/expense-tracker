@@ -1,19 +1,77 @@
+const dayjs = require("dayjs");
 const { Monthly } = require("../models");
 const { Transaction } = require("../models");
 const { User } = require("../models");
 
-
-
-
 // Create a new monthly record
+
+let monthlySample = [
+  {
+    month: "January",
+    amount_expense: 0,
+    amount_income: 0,
+  },
+  {
+    month: "February",
+    amount_expense: 0,
+    amount_income: 0,
+  },
+  {
+    month: "March",
+    amount_expense: 0,
+    amount_income: 0,
+  },
+  {
+    month: "April",
+    amount_expense: 0,
+    amount_income: 0,
+  },
+  {
+    month: "May",
+    amount_expense: 0,
+    amount_income: 0,
+  },
+  {
+    month: "June",
+    amount_expense: 0,
+    amount_income: 0,
+  },
+  {
+    month: "July",
+    amount_expense: 0,
+    amount_income: 0,
+  },
+  {
+    month: "August",
+    amount_expense: 0,
+    amount_income: 0,
+  },
+  {
+    month: "September",
+    amount_expense: 0,
+    amount_income: 0,
+  },
+  {
+    month: "October",
+    amount_expense: 0,
+    amount_income: 0,
+  },
+  {
+    month: "November",
+    amount_expense: 0,
+    amount_income: 0,
+  },
+  {
+    month: "December",
+    amount_expense: 0,
+    amount_income: 0,
+  },
+];
 
 const createMonthly = async (req, res) => {
   try {
     const { month, year, expenses, income } = req.body;
 
-    
-    
-    
     const newMonthly = await Monthly.create({
       month,
       year,
@@ -27,39 +85,53 @@ const createMonthly = async (req, res) => {
   }
 };
 
-
 // Get all
 const getMonthlyDataById = async (req, res) => {
   try {
-    //const allMonthly = await Monthly.find({});
+    const { user_id } = req.params;
 
-    const { user_id, type } = req.params;
-
-    // Get all the monthly records of the user with the given ID and type from request month
-    // and sum the total expenses and income then return the monthly records
     const transaction = await Transaction.find({
-        user: user_id,
-        type: type,
-        date: "", // TODO
+      user: user_id,
     }).populate("user");
 
-    console.log("transaction", transaction);
+    // Put the sum of the amount of the transactions into the monthlySample array base on the month
+    const monthlyData = monthlySample.map((item) => {
+      // get total amount by type expense
+      const totalExpense = transaction.reduce((acc, curr) => {
+        if (
+          dayjs(curr.date).format("MMMM") === item.month &&
+          curr.type === "expense"
+        ) {
+          return acc + curr.amount;
+        }
+        return acc;
+      }, 0);
 
-    const total = transaction.reduce((acc, curr) => {
-        return acc + curr.amount;
-    }, 0);
+      // get total amount by type income
+      const totalIncome = transaction.reduce((acc, curr) => {
+        if (
+          dayjs(curr.date).format("MMMM") === item.month &&
+          curr.type === "income"
+        ) {
+          return acc + curr.amount;
+        }
+        return acc;
+      }, 0);
 
-    console.log("getMonthlyDataById", total);
+      return {
+        ...item,
+        amount_expense: totalExpense,
+        amount_income: totalIncome,
+      };
+    });
 
+    console.log("monthlyData", monthlyData);
 
-    res.status(200).json({total});
+    res.status(200).json({ data: monthlyData });
   } catch (err) {
     res.status(400).json(err);
   }
 };
-
-
-
 
 // Get a single monthly record using the id
 const getMonthlyById = async (req, res) => {
@@ -71,10 +143,6 @@ const getMonthlyById = async (req, res) => {
     res.status(400).json(err);
   }
 };
-
-
-
-
 
 // Update a monthly record
 const updateMonthly = async (req, res) => {
@@ -109,5 +177,5 @@ module.exports = {
   getMonthlyById,
   updateMonthly,
   deleteMonthly,
-  getMonthlyDataById
+  getMonthlyDataById,
 };

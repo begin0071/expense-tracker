@@ -61,3 +61,12 @@ export const createTransaction = (transactionData) => {
     body: JSON.stringify(transactionData),
   });
 };
+
+export const getMonthlyAnalyticsApi = (userId) => {
+  return fetch(`/api/monthly-transactions/${userId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      // authorization: `Bearer ${token}`,
+    },
+  });
+};

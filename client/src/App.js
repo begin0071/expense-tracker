@@ -5,7 +5,6 @@ import { Header, Wrapper } from "./components";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/global.css";
-import "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js";
 
 function App() {
   return (
